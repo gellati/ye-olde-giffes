@@ -1,0 +1,139 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ye Olde Giffes</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link href='https://fonts.googleapis.com/css?family=Lobster|Calligraffitti|Special+Elite|Open+Sans' rel='stylesheet' type='text/css' />
+
+  </head>
+  <body>
+
+    
+    <div class="row">
+      
+      <div class="large-2 large-offset-10" align="center" >
+	
+	<p style="font-size: 150%; font-family: 'Open Sans', sans-serif;"> Login / Register</p>
+	
+      </div> 
+      
+    </div>
+    
+    
+    <div class="row">
+		  
+      <div class="large-8 large-centered" align="center" >
+	
+	<p id="yeolde" class="animated bounceInRight">Ye Olde</p> 
+	<p id="giffes" class="animated bounceInLeft">Giffes</p>
+	
+      </div> 
+      
+    </div>
+		
+    <div class="subtext row" id="logo">
+      
+      <div class="large-8 large-centered columns animated rubberBand"><h2>Celebrating the golden age of silent gifs!</h2></div>
+      
+    </div>
+    
+    <div class="row columns">
+      <div id="navcontainer large-8 large-centered" align="center">
+	<ul id="navlist">
+	  <li id="active">
+	  <li><a href="about.html">What's this?</a></li>
+	  <li><a href="archive.html">Archive</a></li>
+	  <li><a href="gifmaker.html">Simple Gif Maker</a></li>
+	  <li><a href="index.html" id="movie">Movie Maker</a></li>
+	</ul>
+      </div>
+    </div>
+    
+    <div class="large-10 columns large-centered" id="contentbox">
+      <div class="row column">
+	<div class="large-12 large-centered">
+	  
+	  <ul id="movie_elements">
+	   
+
+
+	</ul>			
+
+
+	<div id="element_creator">
+	  Select element to create:
+	  <button class="cbutton" onclick="createTextBoxElement()">Textbox</button>
+	  <button class="cbutton" onclick="createImageElement()">Image</button>
+	  <button class="cbutton" onclick="createGifElement()">Gif</button>
+	</div>
+
+	<div id="creation_zone">
+	</div>
+	
+
+
+      <div class="row collapse">
+	<div class="large-5 small-5 large-centered columns" align="center"> <span class="music">Choose Music:</span>
+	  <div class="styled-select"><select>
+	      <option>None</option>
+	      <option>Fun in a bottle</option>
+	      <option>Breaktime</option>
+	      <option>Five Card Shuffle</option>
+	      <option>Olde Timey</option>
+	  </select></div>
+	</div>
+
+      </div> 	
+
+
+<!--      
+      <div class="row">
+	<div class="large-2 large-centered" style="margin-top: 30px;">
+	  <a href="../silentmovie/index.html" class="button large" >Make a movie!</a>
+	</div>
+      </div>
+      -->
+<button class="button" onclick="createMovie()">
+Make a movie!
+</button>
+
+
+<div id="moviezone">
+</div>
+
+</div>	
+
+</div>
+
+<footer>
+  
+
+
+<!--  
+  <script src="js/foundation.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/vendor/what-input.min.js"></script>
+-->
+
+
+</footer>
+
+<script src="lib/jquery-1.12.2.js"></script>
+<script src="lib/jquery-ui.js"></script>
+
+<!-- msdropdown javascript -->
+<script type="text/javascript" src="lib/jquery.dd.js"></script>
+<!-- msdropdown markup styling -->
+<link rel="stylesheet" type="text/css" href="css/dd.css" />
+
+<script type="text/javascript" src="lib/gifshot.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

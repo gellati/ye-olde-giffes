@@ -1,0 +1,176 @@
+
+._initial_elements,
+._textbox
+ { float: left; border: 1px solid #000; width: 150px; padding: 20px; margin: 20px;}
+
+.movie_element{
+    height: 350px;
+    width: 180px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+    float: left;
+}
+
+
+input,
+textarea{    
+    width: 140px;
+    height: auto;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.textbox_dropdown_area{
+    display: none;
+}
+
+.deletebutton{
+    background-color: red;
+    display: block;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.element_header{
+    display: block;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
+    padding: 5px;
+    margin: 5px;
+}
+
+
+.shop-shelf { float: left; }
+#trash-can { float: left; width: 150px; min-height: 50px; padding: 0.5em; float: left; margin: 8px 10px 8px 20px; cursor: hand; cursor: pointer; border: 1px dotted red; }
+
+
+#movie_elements{
+    border: 1px solid red;
+    margin: 10px;
+    background: green;
+    display: block;
+    height: 25rem;
+}
+
+  .portlet {
+    margin: 0 1em 1em 0;
+    padding: 0.3em;
+  }
+  .portlet-header {
+    padding: 0.2em 0.3em;
+    margin-bottom: 0.5em;
+    position: relative;
+  }
+  .portlet-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -8px;
+  }
+  .portlet-content {
+    padding: 0.4em;
+  }
+  .portlet-placeholder {
+    border: 1px dotted black;
+    margin: 0 1em 1em 0;
+    height: 50px;
+  }
+
+
+
+._image-dropdown {
+    /*style the "box" in its minimzed state*/
+    border:1px solid black; width:200px; height:50px; overflow:hidden;
+    /*animate the dropdown collapsing*/
+   -moz-transition: height 0.1s; 
+    -webkit-transition: height 0.1s; 
+    -ms-transition: height 0.1s;  
+    -o-transition: height 0.1s
+    transition: height 0.1s;
+}
+._image-dropdown:hover {
+    /*when expanded, the dropdown will get native means of scrolling*/
+    height:200px; overflow-y:scroll;
+    /*animate the dropdown expanding*/
+    -moz-transition: height 0.5s; 
+    -webkit-transition: height 0.5s; 
+    -ms-transition: height 0.5s;  
+    -o-transition: height 0.5s;  
+    transition: height 0.5s;
+}
+._image-dropdown input {
+    /*hide the nasty default radio buttons!*/
+    position:absolute;top:0;left:0;opacity:0;
+}
+._image-dropdown label {
+    /*style the labels to look like dropdown options*/
+    /*  display:none; margin:2px; height:46px; opacity:0.2;*/
+}
+
+._image-dropdown label #image1{
+    display:none; margin:2px; height:46px; opacity:0.2;
+    background:url("img/cap1.jpg") 50% 50%;
+}
+._image-dropdown label #image2{
+/*    display:none; margin:2px; height:46px; opacity:0.2;*/
+    background:url("img/tauno.jpg") 50% 50%;
+} 
+
+._image-dropdown:hover label{
+    /*this is how labels render in the "expanded" state.
+     we want to see only the selected radio button in the collapsed menu,
+     and all of them when expanded*/
+    display:block;
+}
+
+._image-dropdown label:hover{
+    opacity: 0.5;
+}
+
+
+.image-dropdown input:checked #image1 {
+    /*tricky! labels immediately following a checked radio button
+      (with our markup they are semantically related) should be fully opaque
+      and visible even in the collapsed menu*/
+    opacity:1 !important; display:block;
+}
+
+
+
+
+
+
+
+
+  
+.clear-both { clear:both; }
+
+.droppable { float: left; width: 150px; height: 150px; padding: 0.5em; float: left; }
+.draggable { width: 100px; height: 50px; padding: 0.5em; margin: 8px 10px 8px 20px; cursor: hand; cursor: pointer; border: 1px solid #000; }
+
+.sortable { float: left; width: 150px; min-height: 50px; padding: 0.5em; float: left; margin: 8px 10px 8px 20px; cursor: hand; cursor: pointer; border: 1px dotted red; }
+
+ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; vertical-align: top;}
+li { list-style-type: none; margin: 5px; display:block; vertical-align: top;}
+
+._list-horizontal li{
+    display: inline-block;
+}
+
+.cbutton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 120px;
+}
+
