@@ -341,7 +341,7 @@ function createGifElement(){
 	console.log(clips.length);
 	console.log(clips);
 
-	var movizeone = document.getElementById("#moviezone");
+	var movizeone = document.getElementById("moviezone");
 	var text = "";
 
 	if(document.getElementById("textinput")){
