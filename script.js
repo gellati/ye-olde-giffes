@@ -342,8 +342,11 @@ function createGifElement(){
 	console.log(clips);
 
 	var movizeone = document.getElementById("#moviezone");
-	var text = document.getElementById("textinput").value;
-	
+	var text = "";
+
+	if(document.getElementById("textinput")){
+	    text = document.getElementById("textinput").value;
+	}
 
 	gifshot.createGIF({
 	    'images': clips,
