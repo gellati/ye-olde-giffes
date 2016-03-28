@@ -6,13 +6,13 @@ var movieCounter = 0;
 var imageData=[
     {
 //	text: "cap",
-	value: 1,
+	value: 0,
 	selected: false,
 	imageSrc: "img/cap1.jpg"
     },
     {
 //	text: "tauno",
-	value: 2,
+	value: 1,
 	selected: false,
 	imageSrc: "img/tauno.jpg"
     }
@@ -22,15 +22,19 @@ var imageData=[
 var gifData = [
     {
 	text: "train",
-	value: 1,
+	value: 0,
 	selected: false,
-	imageSrc: "img/train.gif"
+	imageSrc: "img/train.gif",
+//	imageSrc: "img/orange_splash.gif",
+	time: 500
     },
     {
 	text: "lumiere",
-	value: 2,
+	value: 1,
 	selected: false,
-	imageSrc: "img/lumiere.gif"
+	imageSrc: "img/lumiere.gif",
+	time: 2000
+	
     }    
 ];
 
@@ -311,7 +315,163 @@ function createGifElement(){
 
 
 
+function createGifMovie(){
+    var movie_elements = document.getElementById("movie_elements");
+    var movie_li = movie_elements.getElementsByClassName("movie_element");
+    var indexes = [];
+    for(var i = 0; i < movie_li.length; i++){
+	var dropdown = movie_li[i].querySelector(".gif_dropdown");
+	console.log(dropdown);
+	console.log(dropdown.length);
+	console.log(dropdown.id);
+	dropdown_id = "#" + dropdown.id
+	var ddropdown = $(dropdown_id).msDropDown();
+	console.log(ddropdown);
+	console.log(ddropdown.val());
+	//	console.log(ddropdown.get("selectedIndex"));
+	indexes.push(ddropdown.val());
+    }
+/*
+    for(var i = 0; i < indexes.length; i++){
+	console.log(gifData[indexes[i]].imageSrc);
+	console.log(gifData[indexes[i]].time);	
+    }
+*/
+    var moviezone = document.getElementById("moviezone");
+    var imageArea = document.createElement("div");
+    imageArea.setAttribute("id", "gifmovie"+movieCounter.toString());
 
+    var img = document.createElement("img");
+    img.setAttribute("id", "gifmovie");    
+    imageArea.appendChild(img);
+    moviezone.appendChild(imageArea);
+
+    var deleteButton = document.createElement("button");
+    var deleteString = "removeMovie(" + movieCounter + ")";
+    deleteButton.setAttribute("onclick", deleteString);
+    deleteButton.setAttribute("class", "deletebutton");
+    deleteButton.innerHTML = "delete";
+    imageArea.appendChild(deleteButton);
+
+
+
+/*
+// all gifs played simultaneously, only switches between which ones are visible
+// display on/off through css
+    var movieslideshow = document.createElement("div");
+    var movieslideshow_id = "gifmovie" + movieCounter.toString();
+    movieslideshow.setAttribute("id", movieslideshow_id);
+    for(var i = 0; i < movie_li.length; i++){
+	var img2 = document.createElement("img");
+	if(i === 0){
+	    img2.setAttribute("class", "active");
+	}
+	img2.setAttribute("data-timeout", gifData[indexes[i]].time);
+	img2.setAttribute("src", gifData[indexes[i]].imageSrc);
+	movieslideshow.appendChild(img2);
+    }
+
+    imageArea.appendChild(movieslideshow);
+    moviezone.appendChild(imageArea);
+
+    movieCounter++;
+    
+    console.log(movieslideshow_id);
+    movieslideshow_id = "#" + movieslideshow_id;
+    console.log(movieslideshow_id);
+    var $x = $(movieslideshow_id);
+    var spin = function () {
+	var $a = $x.children('.active');
+	var t = $a.data('timeout');
+	
+	setTimeout(function () {
+            console.log('in timeout function, ' + movieslideshow_id);
+            $a.removeClass('active');
+            var $b = $a.next();
+            if ($b.length == 0) {
+		$b = $a.siblings().first();
+            }
+            $b.addClass('active');
+            spin();
+	}, t);
+	
+    }
+    spin();
+*/
+    
+
+
+
+    
+/*
+    var animateImage = document.createElement('img');
+    for(var i = 0; i < indexes.length; i++){
+	console.log(indexes[i]);
+	console.log(gifData[indexes[i]].imageSrc);
+//	$("#moviezone").css('visibility','visible').hide().delay(gifData[indexes[i]]).fadeIn(100);
+	img.src = gifData[indexes[i]].imageSrc;
+	img.css('visibility','visible').hide().delay(gifData[indexes[i]]).fadeIn(100);
+    }
+*/
+
+
+
+    var j = 0;
+    var counter = 0;
+    var interval = gifData[j].time;
+    console.log("ind: " + indexes.length);
+
+    function updateAnimations(){
+	j = counter % indexes.length;
+	img.src = gifData[indexes[j]].imageSrc;
+	console.log("c: " + counter);
+	console.log("j: " + j + ", ind: " + indexes[j]);
+//	interval = gifData[ (counter % indexes.length) ].time;
+	interval = gifData[ indexes[j] ].time;
+	counter++;
+	setTimeout(updateAnimations, interval);	
+    }
+
+    setTimeout(updateAnimations, interval);
+
+
+    
+
+
+/*
+    var j = 0;
+    var counter = 0;
+    function updateAnimations(){
+	j = counter % indexes.length;
+	console.log(gifData[indexes[j]].imageSrc);
+//	document.getElementById("gifmovie").src = gifData[indexes[j]].imageSrc;
+	img.src = gifData[indexes[j]].imageSrc;
+	counter++;
+    }
+    setInterval(updateAnimations, 500);
+*/
+
+
+    
+    /*
+    var j = 0;
+    var counter = 0;
+    function repeatOften() {
+	//	j =  indexes.length - 1; //(j == 0) ? 1 : 0;
+
+	j = counter % indexes.length;
+	
+	console.log("j: " + j);
+	console.log(gifData[indexes[j]].imageSrc);
+	img.src = gifData[indexes[j]].imageSrc;
+	requestAnimationFrame(repeatOften);
+	counter++;
+    }
+    requestAnimationFrame(repeatOften);
+*/
+	
+
+}
 
 
 
@@ -357,12 +517,10 @@ function createGifElement(){
 	},function(obj) {
 	    if(!obj.error) {
 
-
 		var image = obj.image,
-		    animatedImage = document.createElement('img');
-	//	animatedImage.setAttribute("id", "gifmovie"+movieCounter.toString());
-		animatedImage.src = image;		
+		    img = document.createElement('img');
 
+		img.src = image;		
 
 		var deleteButton = document.createElement("button");
 		var deleteString = "removeMovie(" + movieCounter + ")";
@@ -370,16 +528,13 @@ function createGifElement(){
 		deleteButton.setAttribute("class", "deletebutton");
 		deleteButton.innerHTML = "delete";
 
-		var img = document.createElement("div");
-		img.setAttribute("id", "gifmovie"+movieCounter.toString());
+		var imageArea = document.createElement("div");
+		imageArea.setAttribute("id", "gifmovie"+movieCounter.toString());
 		    
-		img.appendChild(animatedImage);
-		img.appendChild(deleteButton);
+		imageArea.appendChild(img);
+		imageArea.appendChild(deleteButton);
 
-//		animatedImage.appendChild(deleteButton);
-		moviezone.appendChild(img);
-
-
+		moviezone.appendChild(imageArea);
 		movieCounter++;
 
 	    }
