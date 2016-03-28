@@ -38,18 +38,29 @@ var gifData = [
     }    
 ];
 
-
 var textboxData = [
-    {value: 1,
-     imageSrc: "img/white_1s.gif"},
-    {value: 3,
-     imageSrc: "img/white_3s.gif"},
-    {value: 5,
-     imageSrc: "img/white_5s.gif"},
-    {value: 7,
-     imageSrc: "img/white_7s.gif"}
+    {value: 1000,
+     imageSrc: "img/grain.gif"},
+    {value: 3000,
+     imageSrc: "img/grain.gif"},
+    {value: 5000,
+     imageSrc: "img/grain.gif"},
+    {value: 7000,
+     imageSrc: "img/grain.gif"}
 ];
 
+/*
+var textboxData = [
+    {value: 1000,
+     imageSrc: "img/white_1s.gif"},
+    {value: 3000,
+     imageSrc: "img/white_3s.gif"},
+    {value: 5000,
+     imageSrc: "img/white_5s.gif"},
+    {value: 7000,
+     imageSrc: "img/white_7s.gif"}
+];
+*/
 
 function createTextBoxElement(){
     var creationzone = document.getElementById("creation_zone");
@@ -107,6 +118,7 @@ function createTextBoxElement(){
     duration.appendChild(durationTitle);
     var durationLengths = [1,3,5,7];
     var selectLength = document.createElement("select");
+    selectLength.setAttribute("class", "selectLength");
     for(var i = 0; i < durationLengths.length; i++){
 	var option = document.createElement("option");
 	option.innerHTML = durationLengths[i].toString();
@@ -124,117 +136,6 @@ function createTextBoxElement(){
     textbox.appendChild(deletebutton);	
     
     creationzone.appendChild(textbox);
-    //	createdTextBox = true;
-    elementCounter++;
-}
-
-
-
-function createImageElement(){
-    var creationzone = document.getElementById("creation_zone");
-    var image = document.createElement("li");
-    image.className="movie_element image_element";	
-    image.id=elementCounter.toString();
-
-    var header = document.createElement("div");
-    header.className = "element_header";
-    header.innerHTML = "Image";
-    
-    image.appendChild(header);
-
-
-    // image selection
-
-    /*
-    var imageDropdown = document.createElement("div");
-    imageDropdown.className = "image-dropdown";
-
-    for(var i = 0; i < imageData.length; i++){
-	var input = document.createElement("input");
-	input.setAttribute("type", "radio");
-	var img_id = "image" + imageData[i].value;
-	input.setAttribute("id", img_id);
-	input.setAttribute("name", imageData[i].text);
-	input.setAttribute("value", imageData[i].value);
-
-	var label = document.createElement("label");
-	label.setAttribute("for", img_id);
-
-	
-	imageDropdown.appendChild(input);
-	imageDropdown.appendChild(label);
-
-    }
-*/
-
-
-    var imageDropdown = document.createElement("select");
-    imageDropdown.className = "image_dropdown";
-    for(var i = 0; i < imageData.length; i++){
-	var option = document.createElement("option");
-	option.setAttribute("value", imageData[i].value);
-	option.setAttribute("title", imageData[i].imageSrc);
-	imageDropdown.appendChild(option);
-    }
-
-
-/*
-    var imageDropdown = document.createElement("div");
-    imageDropdown.className="image_dropdown";
-*/  
-  
-
-    image.appendChild(imageDropdown);
-
-
-/*    
-    var input = document.createElement("input");
-    input.type="text";
-    input.placeholder="Insert caption here";
-    image.appendChild(input);
-*/
-
-
-    
-    var animation = document.createElement("div");
-    animation.className = "animation";
-    var animationTitle = document.createElement("p");
-	animationTitle.innerHTML = "Animation";
-    animation.appendChild(animationTitle);
-    
-    var animationAlternatives = ["None"];
-    var animationSelect = document.createElement("select");
-    for(var i = 0; i < animationAlternatives.length; i++){
-	var option = document.createElement("option");
-	option.innerHTML = animationAlternatives[i];
-	animationSelect.appendChild(option);
-    }
-    animation.appendChild(animationSelect);
-    image.appendChild(animation);
-    
-    var type = document.createElement("div");
-    var typeTitle = document.createElement("p");
-    typeTitle.innerHTML = "Type";
-    type.appendChild(typeTitle);
-    var typeTypes = ["None"];
-	var selectType = document.createElement("select");
-    for(var i = 0; i < typeTypes.length; i++){
-	var option = document.createElement("option");
-	option.innerHTML = typeTypes[i].toString();
-	selectType.appendChild(option);
-    }
-    type.appendChild(selectType);
-    image.appendChild(type);
-
-    var deletebutton = document.createElement("button");
-    var deletestring = "removeElement(" + elementCounter + ")";
-    deletebutton.setAttribute("onclick", deletestring);
-    deletebutton.setAttribute("class", "deletebutton");
-    
-    deletebutton.innerHTML = "delete";
-    image.appendChild(deletebutton);	
-    
-    creationzone.appendChild(image);
     //	createdTextBox = true;
     elementCounter++;
 }
@@ -319,7 +220,49 @@ function createGifMovie(){
     var movie_elements = document.getElementById("movie_elements");
     var movie_li = movie_elements.getElementsByClassName("movie_element");
     var indexes = [];
+    var movie_objects = [];
+
+    var start = {image: "img/countdown.gif",
+		 time: 10000};
+    movie_objects.push(start);
+
+    
     for(var i = 0; i < movie_li.length; i++){
+	var element = {};
+	console.log(movie_li[i]);
+	console.log(movie_li[i].className);
+	if($(movie_li[i]).hasClass("textbox_element")){
+	    element.type = "text";
+//	    var text = movie_li[i].getElementById("textinput").value;
+	    var text = movie_li[i].querySelector("textarea").value;
+	    console.log("text: " + text);
+	    element.text = text;
+	    var time_index = movie_li[i].querySelector(".selectLength").selectedIndex;
+	    element.time = textboxData[time_index].value;
+	    element.image = textboxData[time_index].imageSrc;
+
+	}
+	if($(movie_li[i]).hasClass("gif_element")){
+	    element.type = "gif";
+	    var dropdown = movie_li[i].querySelector(".gif_dropdown");
+	    dropdown_id = "#" + dropdown.id
+	    var ddropdown = $(dropdown_id).msDropDown();
+//	    element.value = ddropdown.val();
+	    element.time = gifData[ddropdown.val()].time;
+	    element.image = gifData[ddropdown.val()].imageSrc;
+	    element.text = "";
+
+
+	}
+
+	console.log(element);
+
+	movie_objects.push(element);
+
+	/*
+	console.log(movie_li[i].className.length);	
+	console.log(movie_li[i].className[0]);	
+
 	var dropdown = movie_li[i].querySelector(".gif_dropdown");
 	console.log(dropdown);
 	console.log(dropdown.length);
@@ -328,9 +271,20 @@ function createGifMovie(){
 	var ddropdown = $(dropdown_id).msDropDown();
 	console.log(ddropdown);
 	console.log(ddropdown.val());
-	//	console.log(ddropdown.get("selectedIndex"));
+	//	console.log(ddropdown.get("selectedIndex"))
 	indexes.push(ddropdown.val());
+*/
+
     }
+
+  
+    var end = {image: "img/the_end.gif",
+	       time: 1000
+	      }
+    movie_objects.push(end);
+
+
+    
 /*
     for(var i = 0; i < indexes.length; i++){
 	console.log(gifData[indexes[i]].imageSrc);
@@ -342,8 +296,11 @@ function createGifMovie(){
     imageArea.setAttribute("id", "gifmovie"+movieCounter.toString());
 
     var img = document.createElement("img");
-    img.setAttribute("id", "gifmovie");    
+    img.setAttribute("id", "gifmovie");
+    var text = document.createElement("div");
+    text.setAttribute("id", "giftext");
     imageArea.appendChild(img);
+    imageArea.appendChild(text);
     moviezone.appendChild(imageArea);
 
     var deleteButton = document.createElement("button");
@@ -354,6 +311,60 @@ function createGifMovie(){
     imageArea.appendChild(deleteButton);
 
 
+
+    var j = 0;
+    var counter = 0;
+    var interval = movie_objects[j].time;
+    function updateAnimations(){
+	img.src = movie_objects[j].image;
+	text.innerHTML = movie_objects[j].text;
+
+	if(j == movie_objects.length - 1){
+	    return;
+	}
+	else{
+
+	    j++;
+	}
+	interval = movie_objects[j].time;
+	setTimeout(updateAnimations, interval);	
+    }
+    setTimeout(updateAnimations, interval);
+
+
+
+    
+
+
+/*
+    // works
+    var j = 0;
+    var counter = 0;
+    var interval = gifData[j].time;
+    console.log("ind: " + indexes.length);
+
+    function updateAnimations(){
+	j = counter % indexes.length;
+	img.src = gifData[indexes[j]].imageSrc;
+	console.log("c: " + counter);
+	console.log("j: " + j + ", ind: " + indexes[j]);
+//	interval = gifData[ (counter % indexes.length) ].time;
+	interval = gifData[ indexes[j] ].time;
+	counter++;
+	setTimeout(updateAnimations, interval);	
+    }
+
+    setTimeout(updateAnimations, interval);
+*/
+
+
+
+
+
+
+
+
+    
 
 /*
 // all gifs played simultaneously, only switches between which ones are visible
@@ -416,23 +427,8 @@ function createGifMovie(){
 
 
 
-    var j = 0;
-    var counter = 0;
-    var interval = gifData[j].time;
-    console.log("ind: " + indexes.length);
 
-    function updateAnimations(){
-	j = counter % indexes.length;
-	img.src = gifData[indexes[j]].imageSrc;
-	console.log("c: " + counter);
-	console.log("j: " + j + ", ind: " + indexes[j]);
-//	interval = gifData[ (counter % indexes.length) ].time;
-	interval = gifData[ indexes[j] ].time;
-	counter++;
-	setTimeout(updateAnimations, interval);	
-    }
-
-    setTimeout(updateAnimations, interval);
+    
 
 
     

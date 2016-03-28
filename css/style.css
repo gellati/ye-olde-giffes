@@ -1,7 +1,23 @@
 
-#_moviezone {
-    position:relative;
+#gifmovie{
+    height: 200px;
+    position: relative;
 }
+
+#giftext{
+    font-size: 40px;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    bottom: 120px;
+}
+
+#moviezone {
+    width: 400px;
+    height: 300px
+}
+
+
 #_moviezone * img {
     left:0;
     opacity:0;
