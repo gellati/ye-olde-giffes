@@ -223,7 +223,8 @@ function createGifMovie(){
     var movie_objects = [];
 
     var start = {image: "img/countdown.gif",
-		 time: 10000};
+		 time: 10000,
+		 text: ""};
     movie_objects.push(start);
 
     
@@ -279,7 +280,8 @@ function createGifMovie(){
 
   
     var end = {image: "img/the_end.gif",
-	       time: 1000
+	       time: 1000,
+	       text: ""
 	      }
     movie_objects.push(end);
 
