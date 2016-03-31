@@ -65,6 +65,9 @@ var textboxData = [
 function createTextBoxElement(){
     var creationzone = document.getElementById("creation_zone");
     var textbox = document.createElement("li");
+    var i, option;
+
+
     textbox.className="movie_element textbox_element";	
     textbox.id=elementCounter.toString();
 
@@ -85,8 +88,8 @@ function createTextBoxElement(){
 
     var textboxDropdown = document.createElement("select");
     textboxDropdown.className="textbox_dropdown";
-    for(var i = 0; i < textboxData.length; i++){
-	var option = document.createElement("option");
+    for(i = 0; i < textboxData.length; i++){
+	option = document.createElement("option");
 	option.setAttribute("value", textboxData[i].value);
 	option.setAttribute("title", textboxData[i].imageSrc);
 	textboxDropdown.appendChild(option);
@@ -104,8 +107,8 @@ function createTextBoxElement(){
     var animationAlternatives = ["None", "Fade out", "Slide in (Top)",
 				 "Slide in (Bottom)"];
     var animationSelect = document.createElement("select");
-    for(var i = 0; i < animationAlternatives.length; i++){
-	var option = document.createElement("option");
+    for(i = 0; i < animationAlternatives.length; i++){
+	option = document.createElement("option");
 	option.innerHTML = animationAlternatives[i];
 	animationSelect.appendChild(option);
     }
@@ -119,8 +122,8 @@ function createTextBoxElement(){
     var durationLengths = [1,3,5,7];
     var selectLength = document.createElement("select");
     selectLength.setAttribute("class", "selectLength");
-    for(var i = 0; i < durationLengths.length; i++){
-	var option = document.createElement("option");
+    for(i = 0; i < durationLengths.length; i++){
+	option = document.createElement("option");
 	option.innerHTML = durationLengths[i].toString();
 	selectLength.appendChild(option);
     }
@@ -153,14 +156,14 @@ function createGifElement(){
     
     gif.appendChild(header);
 
-
+    var i, option;
 // gif selection    
 
     var gifDropdown = document.createElement("select");
     gifDropdown.className="gif_dropdown";
     gifDropdown.setAttribute("id", "gif_dropdown" + gif.id);
-    for(var i = 0; i < gifData.length; i++){
-	var option = document.createElement("option");
+    for(i = 0; i < gifData.length; i++){
+	option = document.createElement("option");
 	option.setAttribute("value", gifData[i].value);
 	option.setAttribute("title", gifData[i].imageSrc);
 	gifDropdown.appendChild(option);
@@ -178,8 +181,8 @@ function createGifElement(){
     
     var animationAlternatives = ["None", "Fade out", "Slide in (Top)", "Slide in (Bottom)"];
     var animationSelect = document.createElement("select");
-    for(var i = 0; i < animationAlternatives.length; i++){
-	var option = document.createElement("option");
+    for(i = 0; i < animationAlternatives.length; i++){
+	option = document.createElement("option");
 	option.innerHTML = animationAlternatives[i];
 	animationSelect.appendChild(option);
     }
@@ -192,8 +195,8 @@ function createGifElement(){
     type.appendChild(typeTitle);
     var typeTypes = ["None"];
     var selectType = document.createElement("select");
-    for(var i = 0; i < typeTypes.length; i++){
-	var option = document.createElement("option");
+    for(i = 0; i < typeTypes.length; i++){
+	option = document.createElement("option");
 	option.innerHTML = typeTypes[i].toString();
 	selectType.appendChild(option);
     }
@@ -216,6 +219,194 @@ function createGifElement(){
 
 
 
+
+
+
+
+    function createMovie(){
+	var movie_elements = document.getElementById("movie_elements");
+	console.log(movie_elements);
+
+	var movie_list = movie_elements.getElementsByTagName("li");
+	console.log("mov length: " + movie_list.length);
+
+	var li_list = movie_elements.getElementsByClassName("movie_element");
+	console.log("li length: " + li_list.length);
+
+	var clips = [];
+
+	for(var i = 0; i < li_list.length;i++){
+	    var dd = li_list[i].querySelector(".ddTitleText > img");
+	    console.log(dd.src);
+//	    var img = dd.querySelector("img");
+//	    console.log(img.length);
+//	    console.log(img.src);
+	    clips.push(dd.src);
+
+	}
+
+	console.log(clips.length);
+	console.log(clips);
+
+	var movizeone = document.getElementById("moviezone");
+	var text = "";
+
+	if(document.getElementById("textinput")){
+	    text = document.getElementById("textinput").value;
+	}
+
+	gifshot.createGIF({
+	    'images': clips,
+	    'interval': 1,
+	    'text': text,
+	    'fontSize': '30px',
+	    'fontColor': '#000FFF'
+	},function(obj) {
+	    if(!obj.error) {
+
+		var image = obj.image,
+		    img = document.createElement('img');
+
+		img.src = image;		
+
+		var deleteButton = document.createElement("button");
+		var deleteString = "removeMovie(" + movieCounter + ")";
+		deleteButton.setAttribute("onclick", deleteString);
+		deleteButton.setAttribute("class", "deletebutton");
+		deleteButton.innerHTML = "delete";
+
+		var imageArea = document.createElement("div");
+		imageArea.setAttribute("id", "gifmovie"+movieCounter.toString());
+		    
+		imageArea.appendChild(img);
+		imageArea.appendChild(deleteButton);
+
+		moviezone.appendChild(imageArea);
+		movieCounter++;
+
+	    }
+});
+
+	
+
+
+    }
+
+
+function removeElement(divNum) {
+    console.log(divNum);
+
+    var d = document.getElementById(divNum.toString());
+    d.parentNode.removeChild(d);
+	createdTextBox = false;
+}
+
+function removeMovie(n){
+    var d = document.getElementById("gifmovie"+n.toString());
+    d.parentNode.removeChild(d);
+}
+
+
+
+    
+$(function() {
+
+    var elementTypes = [{"class": "Textbox",
+			 "Animation": ["None",
+				       "Fade out",
+				       "Slide in (Top)",
+				       "Slide in (Bottom)"],
+			 "Duration": [1, 3, 5, 7]
+			},
+			{"class": "Image",
+			 "Animation": ["None"],
+			 "Type": ["None"]
+			},
+			{"class": "Gif",
+			 "Animation": ["None",
+				       "Fade out",
+				       "Slide in (Top)",
+				       "Slide in (Bottom)"]
+			}
+		       ];
+
+    
+
+    $("#movie_elements, #creation_zone").sortable({
+	connectWith: "#movie_elements",
+	handle: ".element_header",
+	cancel: ".portlet-toggle",
+	placeholder: "portlet-placeholder ui-corner-all"
+    });
+
+    $(".movie_element")
+      .addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+      .find( ".element_header" )
+        .addClass( "ui-widget-header ui-corner-all" )
+        .prepend( "<span class='ui-icon ui-icon-minusthick portlet-toggle'></span>");
+ 
+    $( ".portlet-toggle" ).click(function() {
+	var icon = $( this );
+	icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+	icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
+    });    
+    
+
+    
+
+    $("#trash-can").droppable({
+        hoverClass: "droppable-hover",
+        drop: function(event, ui) {
+            var element = ui.draggable.css('position', '');
+            $(this).append(element);
+            $(ui.draggable).fadeOut(500);
+
+        }
+    });
+});
+
+$(document).on('click', function(){
+
+
+    $(".gif_dropdown").msDropDown();
+    $(".image_dropdown").msDropDown();
+    $(".textbox_dropdown").msDropDown();
+
+
+    function printOption(n){
+	console.log(n);
+    }
+
+
+
+
+
+    
+    /*    
+    $(".image_dropdown").ddslick({
+	data: imageData,
+	width: 150,
+	selectText: "Select image",
+	imagePosition: "right",
+	onSelected: function(selectedData){
+	}
+    });
+
+
+    $(".gif_dropdown").ddslick({
+	data: gifData,
+	width: 150,
+	selectText: "Select gif",
+	imagePosition: "right",
+	onSelected: function(selectedData){
+	}
+    });
+*/
+
+
+});
+
+
 function createGifMovie(){
     var movie_elements = document.getElementById("movie_elements");
     var movie_li = movie_elements.getElementsByClassName("movie_element");
@@ -226,6 +417,9 @@ function createGifMovie(){
 		 time: 10000,
 		 text: ""};
     movie_objects.push(start);
+    var totaltime = 0;
+
+    var text;
 
     
     for(var i = 0; i < movie_li.length; i++){
@@ -235,23 +429,24 @@ function createGifMovie(){
 	if($(movie_li[i]).hasClass("textbox_element")){
 	    element.type = "text";
 //	    var text = movie_li[i].getElementById("textinput").value;
-	    var text = movie_li[i].querySelector("textarea").value;
+	    text = movie_li[i].querySelector("textarea").value;
 	    console.log("text: " + text);
 	    element.text = text;
 	    var time_index = movie_li[i].querySelector(".selectLength").selectedIndex;
 	    element.time = textboxData[time_index].value;
 	    element.image = textboxData[time_index].imageSrc;
-
+	    totaltime += element.time;
 	}
 	if($(movie_li[i]).hasClass("gif_element")){
 	    element.type = "gif";
 	    var dropdown = movie_li[i].querySelector(".gif_dropdown");
-	    dropdown_id = "#" + dropdown.id
+	    dropdown_id = "#" + dropdown.id;
 	    var ddropdown = $(dropdown_id).msDropDown();
 //	    element.value = ddropdown.val();
 	    element.time = gifData[ddropdown.val()].time;
 	    element.image = gifData[ddropdown.val()].imageSrc;
 	    element.text = "";
+	    totaltime += element.time;
 
 
 	}
@@ -282,7 +477,7 @@ function createGifMovie(){
     var end = {image: "img/the_end.gif",
 	       time: 1000,
 	       text: ""
-	      }
+	      };
     movie_objects.push(end);
 
 
@@ -299,7 +494,7 @@ function createGifMovie(){
 
     var img = document.createElement("img");
     img.setAttribute("id", "gifmovie");
-    var text = document.createElement("div");
+    text = document.createElement("div");
     text.setAttribute("id", "giftext");
     imageArea.appendChild(img);
     imageArea.appendChild(text);
@@ -312,7 +507,7 @@ function createGifMovie(){
     deleteButton.innerHTML = "delete";
     imageArea.appendChild(deleteButton);
 
-
+    console.log("total time: " + totaltime);
 
     var j = 0;
     var counter = 0;
@@ -321,18 +516,55 @@ function createGifMovie(){
 	img.src = movie_objects[j].image;
 	text.innerHTML = movie_objects[j].text;
 
+	
+
 	if(j == movie_objects.length - 1){
 	    return;
 	}
 	else{
-
 	    j++;
 	}
 	interval = movie_objects[j].time;
-	setTimeout(updateAnimations, interval);	
+	setTimeout(updateAnimations, interval);
     }
     setTimeout(updateAnimations, interval);
 
+    var soundclip = "Musopen_-_In_the_Hall_Of_The_Mountain_King.mp3";
+    var context   = new AudioContext();
+
+// load a sound and play it immediatly
+    WebAudiox.loadBuffer(context, 'Musopen_-_In_the_Hall_Of_The_Mountain_King.mp3', function(buffer){
+      // init AudioBufferSourceNode
+	var source  = context.createBufferSource();
+    source.buffer    = buffer;
+    source.connect(context.destination);
+
+      // start the sound now
+    source.play(0);
+    source.stop(totaltime);
+    console.log(totaltime);
+});
+
+
+    var gameSounds = new WebAudiox.GameSounds();
+    var gameSoundClip = new WebAudiox.GameSoundClip(gameSounds);
+    gameSoundClip.load(soundclip);
+    var gameSoundSource = new WebAudiox.GameSoundSource();
+    gameSoundSource.play(0);
+
+
+
+    
+//    wa.play(0);
+ //   wa.stop(totaltime);
+
+    
+    
+    /*
+    var music = "Musopen_-_In_the_Hall_Of_The_Mountain_King.mp3";
+    music.start(0);
+    music.stop(totaltime);
+*/
 
 
     
@@ -469,186 +701,13 @@ function createGifMovie(){
 */
 	
 
-}
+} // createGifMovie
 
 
 
-    function createMovie(){
-	var movie_elements = document.getElementById("movie_elements");
-	console.log(movie_elements);
-
-	var movie_list = movie_elements.getElementsByTagName("li");
-	console.log("mov length: " + movie_list.length);
-
-	var li_list = movie_elements.getElementsByClassName("movie_element");
-	console.log("li length: " + li_list.length);
-
-	var clips = [];
-
-	for(var i = 0; i < li_list.length;i++){
-	    var dd = li_list[i].querySelector(".ddTitleText > img");
-	    console.log(dd.src);
-//	    var img = dd.querySelector("img");
-//	    console.log(img.length);
-//	    console.log(img.src);
-	    clips.push(dd.src);
-
-
-	}
-
-	console.log(clips.length);
-	console.log(clips);
-
-	var movizeone = document.getElementById("moviezone");
-	var text = "";
-
-	if(document.getElementById("textinput")){
-	    text = document.getElementById("textinput").value;
-	}
-
-	gifshot.createGIF({
-	    'images': clips,
-	    'interval': 1,
-	    'text': text,
-	    'fontSize': '30px',
-	    'fontColor': '#000FFF'
-	},function(obj) {
-	    if(!obj.error) {
-
-		var image = obj.image,
-		    img = document.createElement('img');
-
-		img.src = image;		
-
-		var deleteButton = document.createElement("button");
-		var deleteString = "removeMovie(" + movieCounter + ")";
-		deleteButton.setAttribute("onclick", deleteString);
-		deleteButton.setAttribute("class", "deletebutton");
-		deleteButton.innerHTML = "delete";
-
-		var imageArea = document.createElement("div");
-		imageArea.setAttribute("id", "gifmovie"+movieCounter.toString());
-		    
-		imageArea.appendChild(img);
-		imageArea.appendChild(deleteButton);
-
-		moviezone.appendChild(imageArea);
-		movieCounter++;
-
-	    }
-});
-
-	
-
-
-    }
-
-
-function removeElement(divNum) {
-    console.log(divNum);
-
-    var d = document.getElementById(divNum.toString());
-    d.parentNode.removeChild(d);
-	createdTextBox = false;
-}
-
-function removeMovie(n){
-    var d = document.getElementById("gifmovie"+n.toString());
-    d.parentNode.removeChild(d);
-}
 
 
 
-    
-$(function() {
-
-    var elementTypes = [{"class": "Textbox",
-			 "Animation": ["None",
-				       "Fade out",
-				       "Slide in (Top)",
-				       "Slide in (Bottom)"],
-			 "Duration": [1, 3, 5, 7]
-			},
-			{"class": "Image",
-			 "Animation": ["None"],
-			 "Type": ["None"]
-			},
-			{"class": "Gif",
-			 "Animation": ["None",
-				       "Fade out",
-				       "Slide in (Top)",
-				       "Slide in (Bottom)"]
-			}
-		       ];
-
-    
-
-    $("#movie_elements, #creation_zone").sortable({
-	connectWith: "#movie_elements",
-	handle: ".element_header",
-	cancel: ".portlet-toggle",
-	placeholder: "portlet-placeholder ui-corner-all"
-    });
-
-    $(".movie_element")
-      .addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
-      .find( ".element_header" )
-        .addClass( "ui-widget-header ui-corner-all" )
-        .prepend( "<span class='ui-icon ui-icon-minusthick portlet-toggle'></span>");
- 
-    $( ".portlet-toggle" ).click(function() {
-	var icon = $( this );
-	icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
-	icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
-    });    
-    
-
-    
-
-    $("#trash-can").droppable({
-        hoverClass: "droppable-hover",
-        drop: function(event, ui) {
-            var element = ui.draggable.css('position', '');
-            $(this).append(element);
-            $(ui.draggable).fadeOut(500);
-
-        }
-    });
-});
-
-$(document).on('click', function(){
 
 
-    $(".gif_dropdown").msDropDown();
-    $(".image_dropdown").msDropDown();
-    $(".textbox_dropdown").msDropDown();
-
-
-    function printOption(n){
-	console.log(n);
-    }
-
-    
-    /*    
-    $(".image_dropdown").ddslick({
-	data: imageData,
-	width: 150,
-	selectText: "Select image",
-	imagePosition: "right",
-	onSelected: function(selectedData){
-	}
-    });
-
-
-    $(".gif_dropdown").ddslick({
-	data: gifData,
-	width: 150,
-	selectText: "Select gif",
-	imagePosition: "right",
-	onSelected: function(selectedData){
-	}
-    });
-*/
-
-
-});
+//}
