@@ -38,6 +38,19 @@ var gifData = [
     }    
 ];
 
+var musicData = [
+    {
+	name: "Fun in a bottle",
+	musicSrc: "music/fun.mp3"
+    },
+    {
+	name: "In the hall of the mountain king",
+	musicSrc: "music/Musopen_-_In_the_Hall_Of_The_Mountain_King.mp3"
+    }
+];
+
+
+
 var textboxData = [
     {value: 1000,
      imageSrc: "img/grain.gif"},
@@ -61,6 +74,28 @@ var textboxData = [
      imageSrc: "img/white_7s.gif"}
 ];
 */
+
+
+function createMusicMenu(){
+
+    var musicMenu = document.getElementById("musicmenu");
+    var select = document.createElement("select");
+    select.setAttribute("id", "musicselect");
+    var option;
+    for(var i = 0; i < musicData.length; i++){
+	option = document.createElement("option");
+	option.innerHTML = musicData[i].name;
+	select.appendChild(option);
+    }
+
+    musicMenu.appendChild(select);
+}
+
+
+
+createMusicMenu();
+
+
 
 function createTextBoxElement(){
     var creationzone = document.getElementById("creation_zone");
@@ -418,7 +453,7 @@ function createGifMovie(){
 		 text: ""};
     movie_objects.push(start);
     var totaltime = 0;
-
+    totaltime += start.time;
     var text;
 
     
@@ -479,6 +514,7 @@ function createGifMovie(){
 	       text: ""
 	      };
     movie_objects.push(end);
+    totaltime += end.time;
 
 
     
@@ -530,43 +566,25 @@ function createGifMovie(){
     setTimeout(updateAnimations, interval);
 
     var soundclip = "Musopen_-_In_the_Hall_Of_The_Mountain_King.mp3";
-    var context   = new AudioContext();
 
-// load a sound and play it immediatly
-    WebAudiox.loadBuffer(context, 'Musopen_-_In_the_Hall_Of_The_Mountain_King.mp3', function(buffer){
-      // init AudioBufferSourceNode
-	var source  = context.createBufferSource();
-    source.buffer    = buffer;
-    source.connect(context.destination);
+    var index = document.getElementById("musicselect").selectedIndex;
 
-      // start the sound now
-    source.play(0);
-    source.stop(totaltime);
-    console.log(totaltime);
-});
-
-
-    var gameSounds = new WebAudiox.GameSounds();
-    var gameSoundClip = new WebAudiox.GameSoundClip(gameSounds);
-    gameSoundClip.load(soundclip);
-    var gameSoundSource = new WebAudiox.GameSoundSource();
-    gameSoundSource.play(0);
-
-
+    soundclip = musicData[index].musicSrc;
+        
+    var sound = new Howl({
+	urls: [soundclip],
+	sprite: {
+	    backgroundMusic: [0, totaltime],
+	    laser: [2000, 3000],
+	    winner: [4000, 7500]
+	}
+    });
+    
+    // play the music in background to the slideshow
+    sound.play('backgroundMusic');
+    
 
     
-//    wa.play(0);
- //   wa.stop(totaltime);
-
-    
-    
-    /*
-    var music = "Musopen_-_In_the_Hall_Of_The_Mountain_King.mp3";
-    music.start(0);
-    music.stop(totaltime);
-*/
-
-
     
 
 
@@ -705,9 +723,3 @@ function createGifMovie(){
 
 
 
-
-
-
-
-
-//}

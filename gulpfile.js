@@ -13,7 +13,7 @@ gulp.task('js-linting-compiling', function(){
     return gulp.src(['lib/jquery-1.12.2.js', // source files
 		     'lib/jquery-ui.js',
 		     'lib/jquery.dd.js',
-		     'lib/webaudiox.js',
+		     'howler.min.js',
 		     'gifshot.js',
 		     'script.js'
 		    ])
